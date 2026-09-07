@@ -63,8 +63,11 @@ export function App() {
   const fetchSupabasePosts = async () => {
     try {
       const { data, error } = await supabase.from('posts').select('*').order('created_at', { ascending: false });
-      if (!error && data && data.length > 0) {
-        setPosts(data);
+      if (!error && data) {
+        // Merge real Supabase DB posts with initial sample posts if needed
+        const dbPostIds = new Set(data.map(p => p.id));
+        const combined = [...data, ...INITIAL_MOCK_POSTS.filter(p => !dbPostIds.has(p.id))];
+        setPosts(combined);
       }
     } catch (err) {
       console.warn('Using local fallback mock posts', err);

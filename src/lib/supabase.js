@@ -1,8 +1,21 @@
 import { createClient } from '@supabase/supabase-js';
 
-// Get credentials from env or local storage
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || localStorage.getItem('SUPABASE_URL') || '';
-const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY || localStorage.getItem('SUPABASE_ANON_KEY') || '';
+// Prefer a complete environment-variable pair, then a complete user override.
+// The final pair is the project's public client configuration so the deployed
+// app connects without requiring every visitor to configure their browser.
+const envUrl = import.meta.env.VITE_SUPABASE_URL || '';
+const envKey = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY || import.meta.env.VITE_SUPABASE_ANON_KEY || '';
+const storedUrl = localStorage.getItem('SUPABASE_URL') || '';
+const storedKey = localStorage.getItem('SUPABASE_ANON_KEY') || '';
+
+const defaultUrl = 'https://kuguvmycecaahgjgxstz.supabase.co';
+const defaultPublishableKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imt1Z3V2bXljZWNhYWhnamd4c3R6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODc3NzAyMjUsImV4cCI6MjEwMzM0NjIyNX0.8ADvg27HZOKgnSYJuUrnltxylijE8Rya2SIVlMH2Vv8';
+
+const [supabaseUrl, supabaseAnonKey] = envUrl && envKey
+  ? [envUrl, envKey]
+  : storedUrl && storedKey
+    ? [storedUrl, storedKey]
+    : [defaultUrl, defaultPublishableKey];
 
 export const isSupabaseConfigured = () => {
   return Boolean(supabaseUrl && supabaseAnonKey && supabaseUrl.includes('supabase.co'));
@@ -62,7 +75,7 @@ PostgreSQL 기반이라 기존 게시판 데이터와 결합하기 매우 직관
     category: 'AI & Data',
     tags: ['AI', 'VectorDB', 'PostgreSQL'],
     author_name: 'Min-jun Kim',
-    author_avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80',
+    author_avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d3fa?w=150&auto=format&fit=crop&q=80',
     likes_count: 27,
     comments_count: 2,
     views_count: 215,

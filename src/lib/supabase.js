@@ -75,7 +75,7 @@ PostgreSQL 기반이라 기존 게시판 데이터와 결합하기 매우 직관
     category: 'AI & Data',
     tags: ['AI', 'VectorDB', 'PostgreSQL'],
     author_name: 'Min-jun Kim',
-    author_avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d3fa?w=150&auto=format&fit=crop&q=80',
+    author_avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80',
     likes_count: 27,
     comments_count: 2,
     views_count: 215,
